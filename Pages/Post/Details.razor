@@ -1,0 +1,24 @@
+@page "/post/details/{Id:int}"
+@inject ApplicationDBContext context
+
+
+<h2>@post.Title</h2>
+<p>@post.Description</p>
+<p>Author Name : @post.AuthorName</p>
+
+
+<p >Id : @post.Id</p>
+<p> Posted On @post.PostedOn</p>
+
+
+
+
+@code {
+    public Post post {get;set;}
+    [Parameter] public int Id { get; set; }
+     protected override void OnInitialized()
+    {
+        post = context.Posts.FirstOrDefault(x=>x.Id==Id);
+    }
+
+}

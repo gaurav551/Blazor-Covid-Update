@@ -1,0 +1,47 @@
+//SQL SERVER
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=DESKTOP-5OVO0ID ; Database=DB_A56AAC_event551; Trusted_Connection=True; MultipleActiveResultSets=True;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+
+// MYSQL
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "server=localhost; database=firstp; user=root; password=root; port=3306;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*"
+}
+//Production
+
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "server=69.10.33.34; Initial Catalog=blazor;User Id=gaurav;Password=P@$$w0Rd;"
+
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*"
+
+}

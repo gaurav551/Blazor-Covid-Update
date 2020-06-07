@@ -1,0 +1,44 @@
+@page "/nepaldistrictwisedata"
+@inject CovidStatus Services
+
+@if(status.Count==0)
+{
+<div class="d-flex flex-row justify-content-center align-items-center" style="height: 100px;">
+  <div class="p-2">
+    <div class="spinner-border text-info" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+
+
+}
+else
+{
+
+}
+
+
+
+@code{
+       List<NepalDistrictWise> status = new List<NepalDistrictWise>();
+
+      protected override async Task OnInitializedAsync()
+      {
+
+          status = await Services.GetNepalDistrictWiseAsync();
+          System.Console.WriteLine(status.Count);
+           foreach (var item in status)
+    {
+          foreach (var item2 in item.Property1)
+         {
+         System.Console.WriteLine(item2.title_en);
+         }
+
+    }
+
+
+
+
+      }
+}

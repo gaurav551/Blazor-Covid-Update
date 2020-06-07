@@ -1,0 +1,14 @@
+@page "/person/create"
+
+<h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif"> New Person </h3>
+
+<PersonForm Person="person" OnValidSubmit="CreatePerson"></PersonForm>
+
+
+@code{
+    Person person = new Person();
+    public void CreatePerson()
+    {
+        System.Console.WriteLine("Ok");
+    }
+}

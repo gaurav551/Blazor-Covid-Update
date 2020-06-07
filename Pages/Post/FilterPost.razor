@@ -1,0 +1,71 @@
+@page "/post/filter"
+@inject IPostService _postService
+
+
+
+
+<h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif;"> Filter Post </h3>
+<div class="row">
+<div class="col-lg-12">
+<div class="form-group">
+
+        <label class="sr-only">Post Title</label>
+        <input type="text" class="form-control" id="title" placeholder="Post Title"
+        @bind-value="title" @bind-value:event="oninput"
+        @onkeypress="@((KeyboardEventArgs e)=> TitleKeyPress(e))"/>
+
+</div>
+</div>
+<div class="col-lg-9">
+<div class="form-group">
+    <select class="form-control" @bind="selectedCategory" >
+    <option value="0" selected disabled >Select a Category</option>
+    @foreach (var x in Category)
+    {
+     <option value="@x">@x</option>
+    }
+    </select>
+</div>
+</div>
+<div>
+    <button type="button" class="btn btn-primary" @onclick="Search" >Search</button>
+</div>
+<div style="padding-left: 45px;">
+        <button type="button" class="btn btn-danger" @onclick="Clear" >Clear</button>
+
+</div>
+</div>
+<hr>
+<PostList posts="posts"> </PostList>
+@code{
+    public List<Post> posts { get; set; }
+     protected override void OnInitialized()
+    {
+        posts = _postService.GetPosts();
+    }
+    string title="";
+    string selectedCategory="0";
+    string [] Category = new string [3] {"Exploration", "Defence","Diplomacy"};
+
+    private void TitleKeyPress(KeyboardEventArgs e)
+    {
+        if(e.Key=="Enter")
+        {
+            //...
+        }
+    }
+    public void Search()
+    {
+         posts = posts.Where(
+             x=>x.Title.Contains(title)).ToList();
+
+
+    }
+    public void Clear()
+    {
+         title="";
+        selectedCategory="0";
+        posts = _postService.GetPosts();
+
+    }
+}

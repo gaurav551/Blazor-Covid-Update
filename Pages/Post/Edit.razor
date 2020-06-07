@@ -1,0 +1,27 @@
+@page "/post/edit/{Id:int}"
+@inject ApplicationDBContext context
+@inject NavigationManager uriHelper
+
+<h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif;"> Edit Post </h3>
+
+
+<Form ButtonText="Update" Post="post"
+      OnValidSubmit="@EditPost" />
+
+@code {
+    [Parameter] public int Id { get; set; }
+    Post post = new Post();
+
+    protected  override void OnParametersSet()
+    {
+        post = context.Posts.FirstOrDefault(x=>x.Id==Id);
+    }
+
+    async Task EditPost()
+    {
+       context.Posts.Update(post);
+      await context.SaveChangesAsync();
+        uriHelper.NavigateTo("post/index");
+
+    }
+}

@@ -1,0 +1,59 @@
+@page "/post/index"
+@inject ApplicationDBContext context
+@inject IPostService _postService
+@inject IJSRuntime js
+
+<h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif;"> All Posts </h3>
+@if(posts.Count<=0)
+{
+    <p>Nothings</p>
+}
+@if(posts==null)
+{
+    <p>Loading List..</p>
+}
+else
+{
+<div class="row">
+  @foreach (var item in posts)
+        {
+    <div class="col-lg-6 col-sm-12">
+
+
+
+        <div class="card">
+            <div class="card-header">
+                @item.Category
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@item.Title</h5>
+                <p class="card-text">@item.Description</p>
+                <a  class="btn btn-primary" href="post/edit/@item.Id">Edit</a>
+                <a  class="btn btn-primary" href="post/details/@item.Id">View Post</a>
+                <button class="btn btn-danger" @onclick="@(() => Delete(item.Id))">Delete</button>
+            </div>
+        </div>
+
+    </div>
+        }
+</div>
+
+}
+@code {
+    public List<Post> posts { get; set; }
+     protected override void OnInitialized()
+    {
+        posts = _postService.GetPosts();
+    }
+    async Task Delete(int developerId)
+    {
+        var dev = context.Posts.First(x => x.Id == developerId);
+        @* if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {dev.Title}'s ({dev.Id}) Record?"))
+        { *@
+           context.Posts.Remove(dev);
+           await  context.SaveChangesAsync();
+           OnInitialized();
+
+    }
+
+}

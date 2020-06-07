@@ -1,0 +1,18 @@
+@page "/post/create"
+@inject ApplicationDBContext context
+@inject NavigationManager uriHelper
+<h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif;"> New Post </h3>
+
+<Form  Post="@post" ButtonText="Create"
+            OnValidSubmit="@CreatePost" />
+
+@code {
+    Post post = new Post();
+    async Task CreatePost()
+    {
+        context.Posts.Add(post);
+        await context.SaveChangesAsync();
+
+        uriHelper.NavigateTo("post/index");
+    }
+}

@@ -1,0 +1,122 @@
+﻿@page "/covidstatus"
+
+@using BlazorCrud.Data
+@inject CovidStatus ForecastService
+
+
+@if(rootobject == null)
+{
+  <div class="d-flex flex-row justify-content-center align-items-center" style="height: 100px;">
+    <div class="p-2">
+   <div class="spinner-border" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+    </div>
+</div>
+
+
+}
+else
+{
+ <div class="alert alert-primary" role="alert">
+ GLOBAL Covid19 Live Report
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">New Confirmed</h5>
+        <a href="#" class="btn btn-primary">@rootobject.Global.NewConfirmed</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Total Confirmed</h5>
+        <a href="#" class="btn btn-primary">@rootobject.Global.TotalConfirmed</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">New Death</h5>
+        <a href="#" class="btn btn-primary">@rootobject.Global.NewDeaths</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Total Death</h5>
+        <a href="#" class="btn btn-primary">@rootobject.Global.TotalDeaths</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">New Recovered</h5>
+        <a href="#" class="btn btn-primary">@rootobject.Global.NewRecovered</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Total Recovered</h5>
+        <a href="#" class="btn btn-primary">@rootobject.Global.TotalRecovered</a>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<hr>
+<div class="alert alert-primary" role="alert">
+ Country wise Covid19 Live Report
+</div>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Country</th>
+      <th scope="col">Code</th>
+      <th scope="col">Slug</th>
+      <th scope="col">New Confirmed</th>
+      <th scope="col">Total Confirmed</th>
+      <th scope="col">New Deaths</th>
+      <th scope="col">Total Deaths</th>
+      <th scope="col">New Recovered</th>
+      <th scope="col">Total Recovered</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach(var x in rootobject.Countries)
+      {
+    <tr>
+      <th scope="row">@x.Country</th>
+      <td>@x.CountryCode</td>
+      <td>@x.Slug</td>
+      <td>@x.NewConfirmed</td>
+       <td>@x.TotalConfirmed</td>
+        <td>@x.NewDeaths</td>
+         <td>@x.TotalDeaths</td>
+          <td>@x.NewRecovered</td>
+           <td>@x.TotalRecovered</td>
+
+    </tr>
+      }
+  </tbody>
+</table>
+}
+
+@code {
+    public Rootobject rootobject;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rootobject = await ForecastService.GetAsync();
+    }
+}
